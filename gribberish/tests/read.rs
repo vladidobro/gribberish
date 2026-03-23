@@ -977,3 +977,19 @@ fn read_percentile_and_probability_templates() {
         dups
     );
 }
+
+#[test]
+fn read_icon_global_icosahedral() {
+    // The file has grid_template unparsable by gribberish.
+    // We want to be able to parse only the data.
+    let grib_data = read_grib_messages("../test-data/icon_global_icosahedral_model-level_2026032312_012_71_U.grib2");
+    let message = Message::from_data(&grib_data, 0).unwrap();
+    let data = message.data().unwrap();
+    assert_eq!(
+        data.len(),
+        2949120,
+        "Array has unexpected size {}: {:?}",
+        data.len(),
+        data,
+    );
+}

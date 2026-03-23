@@ -896,9 +896,13 @@ impl<'a> Message<'a> {
                     scaled_unpacked_data
                 };
 
-                let shape = self.grid_dimensions()?;
-                let count = shape.0 * shape.1;
-                data.resize(count, 0.0);
+                match self.grid_dimensions() {
+                    Ok(shape) => {
+                        let count = shape.0 * shape.1;
+                        data.resize(count, 0.0);
+                    },
+                    _ => (),
+                };
                 Ok(data)
             }
         }
